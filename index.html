@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coração do Brian™</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+      margin: 0;
+      height: 100vh;
+      background-image: url("memorias.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ===== FUNDO PENSATIVO ===== */
+    body.pensativo {
+      background-image: url("pensativo.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* ===== FUNDO DA AMIZADE CONFIRMADA ===== */
+    body.amizade-confirmada {
+      background-image: url("amizade-confirmada.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      background: #FFF1D0;
+      width: 100%;
+      max-width: 420px;
+      padding: 25px;
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      animation: pop 0.6s ease;
+    }
+
+    body.amizade-confirmada .container {
+      background: rgba(255, 241, 208, 0.92);
+      border: 4px dashed #DD1C1A;
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #DD1C1A;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #F0C808;
+    }
+
+    p {
+      font-size: 15px;
+      margin-bottom: 14px;
+      color: #086788;
+    }
+
+    .small {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    button {
+      font-family: inherit;
+      background: #07A0C3;
+      color: #FFF1D0;
+      border: 3px dashed #086788;
+      padding: 12px 16px;
+      border-radius: 16px;
+      margin: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    button:hover {
+      transform: scale(1.08) rotate(-2deg);
+    }
+
+    .ghost {
+      background: #DD1C1A;
+      border-color: #F0C808;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #final h1 {
+      color: #7928CA;
+      text-shadow: 2px 2px #2AFADF;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- STEP 1 -->
+    <div id="step1">
+      <h1>❤️ Coração do Brian</h1>
+      <p><strong>Te fiz algo?</strong></p>
+
+      <button onclick="showStep('sim')">SIM</button>
+      <button onclick="showStep('nao')" class="ghost">NÃO</button>
+    </div>
+
+    <!-- SIM -->
+    <div id="sim" class="hidden">
+      <p>Então agora explica direito.</p>
+      <p class="small">(modo pronunciamento ativado)</p>
+      <button onclick="openWhats()">ME EXPLICA AGORA</button>
+    </div>
+
+    <!-- NÃO -->
+    <div id="nao" class="hidden">
+      <p>Então por qual motivo você sumiu?</p>
+      <button onclick="showStep('a')">A) Tu é chato</button>
+      <button onclick="showStep('b')">B) Não sei</button>
+      <button onclick="showStep('c')">C) Arrumei um crush</button>
+    </div>
+
+    <!-- A -->
+    <div id="a" class="hidden">
+      <p>Justo. Crescimento pessoal desbloqueado.</p>
+      <p class="small">(vou pensar nisso no banho)</p>
+    </div>
+
+    <!-- B -->
+    <div id="b" class="hidden">
+      <p>
+        Enfim…<br><br>
+        Eu gosto de você.<br>
+        Sem plano escondido.<br>
+        Sem expectativa secreta.
+      </p>
+
+      <p>
+        Se fizer sentido pra você continuar por perto, ótimo.<br>
+        Se não fizer, tudo bem também.
+      </p>
+
+      <p>
+        Nada aqui é obrigação.<br>
+        É só um convite sincero.
+      </p>
+
+      <p class="small">e agora, a pergunta clássica:</p>
+
+      <p><strong>vai ser minha amiga?</strong></p>
+
+      <button onclick="amizade()">SIM</button>
+      <button id="btnNao" class="ghost">NÃO</button>
+      <button id="btnTalvez" class="ghost">TALVEZ</button>
+    </div>
+
+    <!-- C -->
+    <div id="c" class="hidden">
+      <p>Entendi. Desejo felicidade.</p>
+      <p class="small">(com leve dor no ego)</p>
+    </div>
+
+    <!-- FINAL -->
+    <div id="final" class="hidden">
+      <h1>🤝 AMIZADE CONFIRMADA</h1>
+
+      <p>
+        Pronto.<br>
+        Sem contrato.<br>
+        Sem cláusula escondida.
+      </p>
+
+      <p>
+        Acordo válido enquanto for leve,<br>
+        divertido e verdadeiro.
+      </p>
+
+      <p class="small">
+        Inclui conversas aleatórias,<br>
+        risadas inesperadas<br>
+        e zero cobrança emocional.
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    function showStep(id) {
+      document.querySelectorAll('.container > div').forEach(div => {
+        div.classList.add('hidden');
+      });
+
+      document.body.classList.remove("pensativo");
+
+      if (id === "nao") {
+        document.body.classList.add("pensativo");
+      }
+
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function amizade() {
+      document.body.classList.remove("pensativo");
+      document.body.classList.add("amizade-confirmada");
+      showStep('final');
+    }
+
+    function openWhats() {
+      window.open("https://wa.me/5541996381539", "_blank");
+    }
+
+    function fugir(btn) {
+
+  function escapar() {
+    const x = Math.random() * 260 - 130;
+    const y = Math.random() * 200 - 100;
+    btn.style.transform =
+      `translate(${x}px, ${y}px) rotate(${Math.random()*12 - 6}deg)`;
+  }
+
+  // Desktop
+  btn.addEventListener("mouseover", escapar);
+
+  // Mobile
+  btn.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // impede o clique
+    escapar();
+  });
+}
+  </script>
+
+</body>
+</html>
